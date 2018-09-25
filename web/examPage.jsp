@@ -23,13 +23,13 @@
             int ExamId = (int) sess.getAttribute("ExamId");
             String ExamTime = (String) sess.getAttribute("ExamTime");
             String[] parts = ExamTime.split(":");
-            int sec = Integer.parseInt(parts[0])*60*60+ Integer.parseInt(parts[1])*60;
+            int sec = Integer.parseInt(parts[0])*60*60+ Integer.parseInt(parts[1])*60+Integer.parseInt(parts[2]);
             //out.println(userName+"<br>"+ExamId);
             out.println("UserID: "+userName+"<br><br>");
             String FinishExamClick = request.getParameter("Finish Exam");
             
             ArrayList<Integer> QuesId = new ArrayList<Integer>();
-            out.println(FinishExamClick);
+            //out.println(FinishExamClick);
             if("ExamFin".equals(FinishExamClick)==false){
                 
                 
@@ -74,7 +74,7 @@
                         stop = document.getElementById('FinishExam'),
                         seconds = 0, minutes = 0, hours = 0,
                         t,
-                        totalTime = "<%out.print(sec+"");%>";;
+                        totalTime = "<%out.print(sec+"");%>";
                         time = 0;
 
                     function add() {

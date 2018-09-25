@@ -82,7 +82,7 @@
          %>
                 <p2>Enter Exam Name<p2><br>
                 <input type="text" name="examName" value="" size="20" /><br><br>
-                <p2>Enter Total Time For Exam (Formate HH:MM)<p2><br>
+                <p2>Enter Total Time For Exam (Formate HH:MM:SS)<p2><br>
                 <input type="text" name="examTime" value="" size="20" />
                 <input type="submit" value="Generate Question" name="genQuestion"/>
                 </form>
