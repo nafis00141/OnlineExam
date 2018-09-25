@@ -82,9 +82,11 @@
                 int examNum = 1;
                 String examTime = "";
                 for(String s:res){
+                    
                     resIndex++;
                     if(resIndex==1) {
                         ExamID = s;
+                    %><div class="alert alert-primary" style="width:40%;" role="alert"><%
                     }
                     else if(resIndex==2) out.println("Exam Name: "+s+"<br>");
                     else if(resIndex==3){
@@ -113,13 +115,17 @@
                             <input type="hidden" name="ExamTime<%=ExamID%>" value="<%=examTime%>">
                             <button class="btn btn-default" value="Start Exam:<%=ExamID%>" name="Start Exam<%=examNum%>">Start Exam</button>
                         <br>                    
-                    <br>                        
+                    <br> 
+                    
                         <%
                         }
                         examNum++;
+                        %>
+                        </div>
+                        <%
                     }
                     %>
-                            
+                        
                     
                     <%
                     
@@ -130,7 +136,8 @@
             }
 
          %>
-                 </form>
+                     
+                </form>
                  
          <%
             out.println("---------------------------------------------------------------------------------------------<br>");
