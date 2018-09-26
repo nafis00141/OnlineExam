@@ -114,6 +114,18 @@ public class dbOperations {
         return true;
     }
     
+    public boolean updateQuestion(String qid, String question , String marks ){
+        //System.out.println(uname + pass+ type);
+        String sql = "UPDATE `questions` SET `question`='"+question+"',`marks`='"+marks+"' WHERE `questionId`='"+qid+"'";
+        try {
+            st.execute(sql);
+        } catch (SQLException ex){
+            System.out.println("problem");
+            return false;
+        }
+        return true;
+    }    
+    
     public ArrayList<String> getAllExams( String teacherId  ){
         String sql = "SELECT examName FROM `exams` WHERE teacherId = '"+teacherId+"'";
         ArrayList<String> res = new ArrayList<String>();
@@ -190,6 +202,34 @@ public class dbOperations {
             
         } catch (SQLException ex) {
             res.add("problem");
+            return res;
+        }
+    }
+    
+    public ArrayList<ArrayList<String>> getAllQue( String examName){
+        String sql = "SELECT questionId,question,marks FROM questions,exams WHERE exams.examId = questions.examId and exams.examName = '"+examName+"'";
+        ArrayList<ArrayList<String>> res = new ArrayList<ArrayList<String>>();
+        ArrayList<String> id = new ArrayList<String>();
+        ArrayList<String> questions = new ArrayList<String>();
+        ArrayList<String> mark = new ArrayList<String>();
+        try { 
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                String qid = rs.getString(1);
+                String ques = rs.getString(2);
+                String marks = rs.getString(3);
+                id.add(qid);
+                questions.add(ques);
+                mark.add(marks);
+                
+            }
+            res.add(id);
+            res.add(questions);
+            res.add(mark);
+            return res;
+            
+        } catch (SQLException ex) {
+            
             return res;
         }
     }

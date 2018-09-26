@@ -57,8 +57,14 @@
                 out.println("<p2><b>Question no: "+q+"</b></p2><br><b>"+questions.get(quesNo) +"</b><br><p2>Alloted Marks: <b>"+questions.get(quesNo+1)+"</b><p2><br>");
                 %></div><%
             }
+
+            
             
          %>
+         
+            <div class="alert alert-warning" role="alert" style="height: auto%; width: 10%">
+                <a href="examQuestionEdit.jsp?examName=<%=examName%>"> Edit <%=examName%><br></a>
+            </div>
          
          <br>
          <br>
