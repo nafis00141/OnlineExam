@@ -18,7 +18,8 @@
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Logout</title>
-        <div class="h3 mb-3 font-weight-normal">
+        <div class="h3 mb-3 font-weight-normal text-capitalize">
+            
         <%
             HttpSession sess = request.getSession();
             //int userId = (int)sess.getAttribute("id");

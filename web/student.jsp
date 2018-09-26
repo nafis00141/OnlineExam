@@ -17,19 +17,41 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Student</title>
+        <title>Student </title>
 
     </head>
     
-    <body class="text-justify" style="margin:auto; padding: 50px;">
-        <h1 class="h3 mb-3 font-weight-normal">Student</h1>
+    <body>
+        
+        <header>
+            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+                <div id="navbarNavDropdown" class="navbar-collapse collapse">
+                    <ul class="navbar-nav mr-auto">
+                        <a class="navbar-brand" href="#">Aust Exams</a>
+                    </ul>
+                    <ul class="navbar-nav">
+                         <li class="nav-item active">
+                            <a class="nav-link" href="student.jsp">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="logout.jsp">Log Out</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        
+        <div style="margin:auto; padding: 70px;">
+        
         <p id="demo"></p>
         <%
             HttpSession sess = request.getSession();
             int userId = (int)sess.getAttribute("id");
             //out.println(userId);
             String userName = (String) sess.getAttribute("userName");
-            out.println("UserID: "+userName+"<br><br>");
+            %><h1 class="h3 mb-3 font-weight-normal text-capitalize"><%=userName%>'s home</h1><br><%
+            //out.println("<p >UserID: "+userName+"</p><br><br>");
             
             String clickedStExam = "";
             dbOperations dboo = new dbOperations();
@@ -56,11 +78,13 @@
                 response.sendRedirect("examPage.jsp");
             }
          %>
-         
-        <form name="SearchExamForm" action="student.jsp" method="POST">
-            <input type="text" name="examName" placeholder="examName" size="20"  /> <br><br>
-            <button class="btn btn-default btn-lg" type="submit" value="Search Exam" name="Search Exam">Search Exam</button>
-        </form>
+        
+        <div class="d-flex justify-content-between" style="margin:auto; padding: auto;"> 
+            <form name="SearchExamForm" action="student.jsp" method="POST">
+                <input type="text" class="form-control" name="examName" placeholder="examName" size="20"  /> <br>
+                <button class="btn btn-default btn-lg" type="submit" value="Search Exam" name="Search Exam">Search Exam</button>
+            </form>
+        </div>
          
         <br>
 
@@ -138,13 +162,9 @@
          %>
                      
                 </form>
+         </div>
                  
-         <%
-            out.println("---------------------------------------------------------------------------------------------<br>");
-           
-             %>
-                 
-                 <a class="btn btn-default" role="button" href="logout.jsp">LOG OUT</a><br><br>
+         
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
