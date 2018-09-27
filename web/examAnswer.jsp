@@ -22,6 +22,24 @@
     </head>
     <body>
         
+        <header>
+            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+                <div id="navbarNavDropdown" class="navbar-collapse collapse">
+                    <ul class="navbar-nav mr-auto">
+                        <a class="navbar-brand" href="#">Aust Exams</a>
+                    </ul>
+                    <ul class="navbar-nav">
+                         <li class="nav-item active">
+                            <a class="nav-link" href="teacher.jsp">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="logout.jsp">Log Out</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <div style="margin:auto; padding: 70px;">
          <%!
         public String htmlFilter(String message) {
                 if (message == null) return null;
@@ -43,18 +61,18 @@
         %>
         
         <%
-            
+            %><h1 class="h3 mb-3 font-weight-normal text-capitalize">Answer Paper</h1><br><%
             HttpSession sess = request.getSession();
             int userId = (int)sess.getAttribute("id");
             //out.println(userId);
             String userName = (String) sess.getAttribute("userName");
-            out.println("UserID: "+userName+"<br><br><br>");
+            //out.println("UserID: "+userName+"<br><br><br>");
             dbOperations dbo = new dbOperations();
             String marksGivenSub = request.getParameter("marksGiven");
             
             if(marksGivenSub!=null){
                 String sid = request.getParameter("sid");
-                out.println("Studrnt Id: "+ sid+"<br>");
+                //out.println("Studrnt Id: "+ sid+"<br>");
                 Enumeration names = request.getParameterNames();
                 String element = "",ans = "";
                 ArrayList<Integer> aid = new ArrayList<Integer>();
@@ -89,8 +107,8 @@
             else{
                 String examName = request.getParameter("examName");
                 String sid = request.getParameter("sid");
-                out.println("Exam Name: "+ examName+"<br>");
-                out.println("Studrnt Id: "+ sid+"<br>");
+                //out.println("Exam Name: "+ examName+"<br>");
+                //out.println("Studrnt Id: "+ sid+"<br>");
 
                 
                 ArrayList<String> questions = dbo.getAllQues(examName);
@@ -101,15 +119,16 @@
                 <%
 
                 for(int quesNo=0,q=1,ansNo=1;quesNo<questions.size();quesNo=quesNo+2,q++,ansNo=ansNo+2){
-                    out.println("<br><p2>Question no: "+q+"<p2><br>"+questions.get(quesNo) +"<br><p2>Alloted Marks: "+questions.get(quesNo+1)+"<p2><br>");
-                    out.println("Answer: "+answers.get(ansNo) +"<br>");
+                    %><div class="alert alert-primary " role="alert" style="height: auto%; width: 60%"><%
+                    out.println("<br><p2><b>Question no: "+q+"</b><p2><br><b>"+questions.get(quesNo) +"</b><br><p2><b>Alloted Marks: "+questions.get(quesNo+1)+"</b><p2><br><br>");
+                    out.println("Answer: <b>"+answers.get(ansNo) +"</b><br><br>");
 
                     %>
 
                     Enter Marks:<br>
                     <input type="text" name="ans<%=answers.get(ansNo-1)%>" >
                     <br>
-
+                    </div>
 
                     <%
 
@@ -118,7 +137,8 @@
 
                 %>
                 <input type="hidden" name="sid" value="<%=sid%>">
-                <input type="submit" value="marks" name="marksGiven"/>
+                
+                <button type="submit" class="btn btn-default" value="marks" name="marksGiven">Submit</button>
                 </form>
             <%
             }
@@ -126,11 +146,7 @@
              
         <br>
         <br>
-        <%
-            out.println("---------------------------------------------------------------------------------------------<br>");
-           
-             %>
-        <a href="teacher.jsp">Home</a>
+        </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
