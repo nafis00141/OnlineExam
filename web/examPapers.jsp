@@ -41,40 +41,40 @@
         </header>
             
         <div style="margin:auto; padding: 70px;">
-        <%
-            HttpSession sess = request.getSession();
-            int userId = (int)sess.getAttribute("id");
-            //out.println(userId);
-            String userName = (String) sess.getAttribute("userName");
-            //out.println("UserID: "+userName+"<br><br><br>");
-            
-            String examName = request.getParameter("examName");
-            %><h1 class="h3 mb-3 font-weight-normal text-capitalize"><%=examName%>'s all submitted answer Paper</h1><br><%
-            //out.println("Exam Name: "+ examName+"<br>");
-            
-            dbOperations dbo = new dbOperations();
-            ArrayList<ArrayList> fin = dbo.getAllSubmittedAnswes(examName);
-            
-            ArrayList<String> names = fin.get(0);
-            ArrayList<String> ids = fin.get(1);
-            
-        %>
-            <div class="alert alert-primary " role="alert" style="height: auto%; width: 25%">
-            <p2><b>List of Answer Papers<b></p2>
-            </div>
-        <%
-            
-            for (int i = 0; i < ids.size(); i++) { 
-                
-                String name = names.get(i);
-                String idd = ids.get(i);
-        %>
-               <div class="alert alert-success" role="alert" style="height: auto%; width: 25%; padding-left: 2%;">
-               <a href="examAnswer.jsp?examName=<%=examName%>&sid=<%=idd%>"><%=name%></a>
-               </div>
-        <%
-            } 
-        %>  
+            <%
+                HttpSession sess = request.getSession();
+                int userId = (int)sess.getAttribute("id");
+                //out.println(userId);
+                String userName = (String) sess.getAttribute("userName");
+                //out.println("UserID: "+userName+"<br><br><br>");
+
+                String examName = request.getParameter("examName");
+                %><h1 class="h3 mb-3 font-weight-normal text-capitalize"><%=examName%>'s all submitted answer Paper</h1><br><%
+                //out.println("Exam Name: "+ examName+"<br>");
+
+                dbOperations dbo = new dbOperations();
+                ArrayList<ArrayList> fin = dbo.getAllSubmittedAnswes(examName);
+
+                ArrayList<String> names = fin.get(0);
+                ArrayList<String> ids = fin.get(1);
+
+            %>
+                <div class="alert alert-primary " role="alert" style="height: auto%; width: 25%">
+                <p2><b>List of Answer Papers<b></p2>
+                </div>
+            <%
+
+                for (int i = 0; i < ids.size(); i++) { 
+
+                    String name = names.get(i);
+                    String idd = ids.get(i);
+            %>
+                   <div class="alert alert-success" role="alert" style="height: auto%; width: 25%; padding-left: 2%;">
+                   <a href="examAnswer.jsp?examName=<%=examName%>&sid=<%=idd%>"><%=name%></a>
+                   </div>
+            <%
+                } 
+            %>  
         
         </div>
     <!-- Optional JavaScript -->

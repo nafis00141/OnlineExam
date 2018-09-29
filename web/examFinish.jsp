@@ -18,19 +18,40 @@
         <title>Aust Exams</title>
     </head>
     <body>
+        <header>
+            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+                <div id="navbarNavDropdown" class="navbar-collapse collapse">
+                    <ul class="navbar-nav mr-auto">
+                        <a class="navbar-brand" href="#">Aust Exams</a>
+                    </ul>
+                    <ul class="navbar-nav">
+                         <li class="nav-item active">
+                            <a class="nav-link" href="student.jsp">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="logout.jsp">Log Out</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
         <%
             HttpSession sess = request.getSession();
             int userId = (int)sess.getAttribute("id");
             //out.println(userId);
             String userName = (String) sess.getAttribute("userName");
-            out.println("UserID: "+userName+"<br><br>");
+            //out.println("UserID: "+userName+"<br><br>");
          %>
-        <h1>Exam Finished</h1>
-        <p>Your exam is finished.</p>
-        <p>You will get your marks after evaluation is done<p>
-        <p>Go Home<p>
-        <br><br>
-        <a href="student.jsp">Home</a>
+        <div style="margin-top: 2%; padding: 70px;">
+            <div class="alert alert-success text-center text-capitalize" role="alert" style="height: auto%; width: 35%; left: 35%"">
+                <h1>Exam Finished</h1><br>
+                <p2><b><%=userName%> your exam is finished.</b></p2><br>
+                <p2><b>You will get your marks after evaluation is done.</b></p2><br>
+                <p2><b>Go Home</b></p2>
+                
+            </div>
+        </div>
+        
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

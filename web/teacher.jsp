@@ -20,6 +20,7 @@
         <title>Teacher</title>
     </head>
     <body>
+        
         <header>
             <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
                 <div id="navbarNavDropdown" class="navbar-collapse collapse">
@@ -38,46 +39,45 @@
             </nav>
         </header>
         
+        
         <div style="margin:auto; padding: 70px;">
         
-        <%
-            HttpSession sess = request.getSession();
-            int userId = (int)sess.getAttribute("id");
-            //out.println(userId);
-            String userName = (String) sess.getAttribute("userName");
-            //out.println("UserID: "+userName+"<br><br>");
-            %><h1 class="h3 mb-3 font-weight-normal text-capitalize"><%=userName%>'s home</h1><br><%
-         %>
+            <%
+                HttpSession sess = request.getSession();
+                int userId = (int)sess.getAttribute("id");
+                String userName = (String) sess.getAttribute("userName");
+
+                %><h1 class="h3 mb-3 font-weight-normal text-capitalize"><%=userName%>'s home</h1><br><%
+            %>
          
-        <form name="createExam" action="createExam.jsp" method="POST">
-            <button type="submit" class="btn btn-default" value="Create New Exam" name="crE">Create New Exam</button>
-        </form><br>
-         
-        <div class="alert alert-info" role="alert" style="width: 20%">
+            <form name="createExam" action="createExam.jsp" method="POST">
+                <button type="submit" class="btn btn-default" value="Create New Exam" name="crE">Create New Exam</button>
+            </form><br>
+
+            <div class="alert alert-info" role="alert" style="width: 20%">
                 All Exam Set by You: 
-        </div><br>
+            </div><br>
         
         
         
-        <%
-            dbOperations dbo = new dbOperations();
-            ArrayList<String> exams = dbo.getAllExams(userId+"");
+            <%
+                dbOperations dbo = new dbOperations();
+                ArrayList<String> exams = dbo.getAllExams(userId+"");
+
+                for(String a: exams){
+            %>
+            
+                    <div class="alert alert-primary" role="alert" style="height: 11%; width: 60%">
+                        <a href="examQuestion.jsp?examName=<%=a%>"><%=a%><br></a>
+                        <div class="alert alert-secondary" role="alert">
+                            <a href="examPapers.jsp?examName=<%=a%>">Submitted Papers On <%=a%> </a>
+                        </div>
+                    </div>
             
             
-            
-            for(String a: exams){
-        %>
-            <div class="alert alert-primary" role="alert" style="height: 11%; width: 60%">
-                <a href="examQuestion.jsp?examName=<%=a%>"><%=a%><br></a>
-                <div class="alert alert-secondary" role="alert">
-                    <a href="examPapers.jsp?examName=<%=a%>">Submitted Papers On <%=a%> </a>
-                </div>
-            </div>
-            
-            
-        <%
-            } 
-        %>  
+            <%
+                } 
+            %>  
         
         </div>
     <!-- Optional JavaScript -->

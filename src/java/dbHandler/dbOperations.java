@@ -254,14 +254,16 @@ public class dbOperations {
     }
     
     public ArrayList<String> getAllAns( String examName,String sid){
-        String sql = "SELECT `ansId`,`answer` FROM `answers` WHERE `studentId` = '"+sid+"' AND `questionId` in (SELECT `questionId` FROM `questions` WHERE `examId` = (SELECT `examId` FROM `exams` WHERE `examName` = '"+examName+"'))";
+        String sql = "SELECT `ansId`,`answer`,`marks` FROM `answers` WHERE `studentId` = '"+sid+"' AND `questionId` in (SELECT `questionId` FROM `questions` WHERE `examId` = (SELECT `examId` FROM `exams` WHERE `examName` = '"+examName+"'))";
         ArrayList<String> res = new ArrayList<String>();
         try { 
             ResultSet rs = st.executeQuery(sql);
             while(rs.next()){
-                String ques = rs.getString(1);
-                String marks = rs.getString(2);
-                res.add(ques);
+                String ansid = rs.getString(1);
+                String ans = rs.getString(2);
+                String marks = rs.getString(3);
+                res.add(ansid);
+                res.add(ans);
                 res.add(marks);
             }
             return res;
@@ -293,6 +295,25 @@ public class dbOperations {
             res.add("problem");
             return res;
         }
+    }
+    
+    public String getExamName(String eid){
+        String sql = "SELECT `examName` FROM `exams` WHERE `examId` = '"+eid+"'";
+        System.out.println(sql);
+        String res = "";
+        try { 
+            ResultSet rs = sst.executeQuery(sql);
+            while(rs.next()){
+                res = rs.getString(1);
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            System.out.println("Problem here");
+            return res;
+        }
+        
+        return res;
+        
     }
     
     public ArrayList<String> getNumber(String eid,String sid){

@@ -20,24 +20,24 @@
         <title>Logout</title>
         <div class="h3 mb-3 font-weight-normal text-capitalize">
             
-        <%
-            HttpSession sess = request.getSession();
-            //int userId = (int)sess.getAttribute("id");
-            //out.println(userId);
-            String userName = (String) sess.getAttribute("userName");
-            //out.println(userName);
-            sess.invalidate();
-            out.print("<br><br>");
-            //out.print("--------------------------<br>");
-            out.print("Have a nice day "+userName +" :) ");
-            //out.print("<br>-------------------------<br>");
-            out.print("<br><br>");
-            out.print("<br><br>");
-            RequestDispatcher requestDispatcher; 
-            requestDispatcher = request.getRequestDispatcher("/index.jsp");
-            requestDispatcher.include(request, response);
-            
-         %>
+            <%
+                HttpSession sess = request.getSession();
+                //int userId = (int)sess.getAttribute("id");
+                //out.println(userId);
+                String userName = (String) sess.getAttribute("userName");
+                //out.println(userName);
+                sess.invalidate();
+                out.print("<br><br>");
+                //out.print("--------------------------<br>");
+                out.print("Have a nice day "+userName +" :) ");
+                //out.print("<br>-------------------------<br>");
+                out.print("<br><br>");
+                out.print("<br><br>");
+                RequestDispatcher requestDispatcher; 
+                requestDispatcher = request.getRequestDispatcher("/index.jsp");
+                requestDispatcher.include(request, response);
+
+             %>
         </div>
         </head>
     <!-- Optional JavaScript -->

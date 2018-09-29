@@ -70,21 +70,21 @@
                 
             }
 
-         %>
+        %>
         
-         <div class="col-lg-2 center-block" style="margin:auto; padding: auto;">               
-            <form name="regForm" action="register.jsp" method="POST">
-                <input type="text" class="form-control"  name="userName" placeholder="username" size="20"  /> <br>
-                <input type="password" class="form-control"  name="password" placeholder="password" size="20" /><br>
-                <div class="h4 mb-3 font-weight-normal">
-                    <input type="radio" name="student" value="student"> Student<br><br>
-                    <input type="radio" name="teacher" value="teacher"> Teacher<br><br>
-                 </div>
-                <button class="btn btn-default btn-lg" type="submit" value="Reg" name="reg">Register</button><br><br>
-                
-            </form>
-        </div>
-         <a class="btn btn-default" href="index.jsp" role="button">LogIn</a>
+            <div class="col-lg-2 center-block" style="margin:auto; padding: auto;">               
+               <form name="regForm" action="register.jsp" method="POST">
+                   <input type="text" class="form-control"  name="userName" placeholder="username" size="20"  /> <br>
+                   <input type="password" class="form-control"  name="password" placeholder="password" size="20" /><br>
+                   <div class="h4 mb-3 font-weight-normal">
+                       <input type="radio" name="student" value="student"> Student<br><br>
+                       <input type="radio" name="teacher" value="teacher"> Teacher<br><br>
+                    </div>
+                   <button class="btn btn-default btn-lg" type="submit" value="Reg" name="reg">Register</button><br><br>
+
+               </form>
+            </div>
+            <a class="btn btn-default" href="index.jsp" role="button">LogIn</a>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

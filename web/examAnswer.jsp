@@ -29,7 +29,7 @@
                         <a class="navbar-brand" href="#">Aust Exams</a>
                     </ul>
                     <ul class="navbar-nav">
-                         <li class="nav-item active">
+                        <li class="nav-item active">
                             <a class="nav-link" href="teacher.jsp">Home <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
@@ -40,112 +40,121 @@
             </nav>
         </header>
         <div style="margin:auto; padding: 70px;">
-         <%!
-        public String htmlFilter(String message) {
-                if (message == null) return null;
-                int len = message.length();
-                StringBuffer result = new StringBuffer(len + 20);
-                char aChar;
-                for (int i = 0; i < len; ++i) {
-                aChar = message.charAt(i);
-                switch (aChar) {
-                case '<': result.append("&lt;"); break;
-                case '>': result.append("&gt;"); break;
-                case '&': result.append("&amp;"); break;
-                case '"': result.append("&quot;"); break;
-                default: result.append(aChar);
-                }
-                }
-                return (result.toString());
-        }  
-        %>
-        
-        <%
-            %><h1 class="h3 mb-3 font-weight-normal text-capitalize">Answer Paper</h1><br><%
-            HttpSession sess = request.getSession();
-            int userId = (int)sess.getAttribute("id");
-            //out.println(userId);
-            String userName = (String) sess.getAttribute("userName");
-            //out.println("UserID: "+userName+"<br><br><br>");
-            dbOperations dbo = new dbOperations();
-            String marksGivenSub = request.getParameter("marksGiven");
             
-            if(marksGivenSub!=null){
-                String sid = request.getParameter("sid");
-                //out.println("Studrnt Id: "+ sid+"<br>");
-                Enumeration names = request.getParameterNames();
-                String element = "",ans = "";
-                ArrayList<Integer> aid = new ArrayList<Integer>();
-                ArrayList<Integer> res = new ArrayList<Integer>();
-                while(names.hasMoreElements()){
-                    element = htmlFilter(names.nextElement().toString());
-                    
-                    if(element.toLowerCase().contains("ans")){
-                        ans = request.getParameter(element);
-                        element = element.replace("ans","");
-                        aid.add(Integer.parseInt(element));
-                        //out.println(element+"<br>");
-                        //out.println(ans+"<br>");
-                        res.add(Integer.parseInt(ans));
+            <%!
+                public String htmlFilter(String message) {
+                        if (message == null) return null;
+                        int len = message.length();
+                        StringBuffer result = new StringBuffer(len + 20);
+                        char aChar;
+                        for (int i = 0; i < len; ++i) {
+                        aChar = message.charAt(i);
+                        switch (aChar) {
+                        case '<': result.append("&lt;"); break;
+                        case '>': result.append("&gt;"); break;
+                        case '&': result.append("&amp;"); break;
+                        case '"': result.append("&quot;"); break;
+                        default: result.append(aChar);
+                        }
+                        }
+                        return (result.toString());
+                }  
+            %>
+        
+            <%
+                %><h1 class="h3 mb-3 font-weight-normal text-capitalize">Answer Paper</h1><br><%
+                HttpSession sess = request.getSession();
+                int userId = (int)sess.getAttribute("id");
+                //out.println(userId);
+                String userName = (String) sess.getAttribute("userName");
+                //out.println("UserID: "+userName+"<br><br><br>");
+                dbOperations dbo = new dbOperations();
+                String marksGivenSub = request.getParameter("marksGiven");
+
+                if(marksGivenSub!=null){
+                    String sid = request.getParameter("sid");
+                    //out.println("Studrnt Id: "+ sid+"<br>");
+                    Enumeration names = request.getParameterNames();
+                    String element = "",ans = "";
+                    ArrayList<Integer> aid = new ArrayList<Integer>();
+                    ArrayList<Integer> res = new ArrayList<Integer>();
+                    while(names.hasMoreElements()){
+                        element = htmlFilter(names.nextElement().toString());
+
+                        if(element.toLowerCase().contains("ans")){
+                            ans = request.getParameter(element);
+                            element = element.replace("ans","");
+                            aid.add(Integer.parseInt(element));
+                            //out.println(element+"<br>");
+                            //out.println(ans+"<br>");
+                            res.add(Integer.parseInt(ans));
+                        }
+
                     }
-                   
-                }
-                boolean up = dbo.updateResult(Integer.parseInt(sid),aid,res);
-                
-                if(up==true){
-                    %>
-                       <p2>Marks Updated</p2>
-                       
-                    <%
-                     
+                    boolean up = dbo.updateResult(Integer.parseInt(sid),aid,res);
+
+                    if(up==true){
+            %>
+                        <div class="alert alert-success text-center" role="alert" style="height: auto%; width: 35%; left: 35%">
+                        <h3>Marks Updated</h3>
+                        </div>
+
+            <%
+
+                    }
+                    else{
+                        out.println("problem assigning marks<br>");
+                    }
+
                 }
                 else{
-                    out.println("problem assigning marks<br>");
-                }
-                
-            }
-            else{
-                String examName = request.getParameter("examName");
-                String sid = request.getParameter("sid");
-                //out.println("Exam Name: "+ examName+"<br>");
-                //out.println("Studrnt Id: "+ sid+"<br>");
-
-                
-                ArrayList<String> questions = dbo.getAllQues(examName);
-                ArrayList<String> answers = dbo.getAllAns(examName,sid);
-
-                %>
-                <form name="GradePaper" action="examAnswer.jsp" method="POST">        
-                <%
-
-                for(int quesNo=0,q=1,ansNo=1;quesNo<questions.size();quesNo=quesNo+2,q++,ansNo=ansNo+2){
-                    %><div class="alert alert-primary " role="alert" style="height: auto%; width: 60%"><%
-                    out.println("<br><p2><b>Question no: "+q+"</b><p2><br><b>"+questions.get(quesNo) +"</b><br><p2><b>Alloted Marks: "+questions.get(quesNo+1)+"</b><p2><br><br>");
-                    out.println("Answer: <b>"+answers.get(ansNo) +"</b><br><br>");
-
-                    %>
-
-                    Enter Marks:<br>
-                    <input type="text" name="ans<%=answers.get(ansNo-1)%>" >
-                    <br>
-                    </div>
-
-                    <%
+                    String examName = request.getParameter("examName");
+                    String sid = request.getParameter("sid");
+                    //out.println("Exam Name: "+ examName+"<br>");
+                    //out.println("Studrnt Id: "+ sid+"<br>");
 
 
-                }
+                    ArrayList<String> questions = dbo.getAllQues(examName);
+                    ArrayList<String> answers = dbo.getAllAns(examName,sid);
 
-                %>
-                <input type="hidden" name="sid" value="<%=sid%>">
-                
-                <button type="submit" class="btn btn-default" value="marks" name="marksGiven">Submit</button>
-                </form>
+
+
+            %>
+                    <form name="GradePaper" action="examAnswer.jsp" method="POST">        
             <%
-            }
-             %>
+
+                        for(int quesNo=0,q=1,ansNo=1;quesNo<questions.size();quesNo=quesNo+2,q++,ansNo=ansNo+3){
+                            %><div class="alert alert-primary " role="alert" style="height: auto%; width: 60%"><%
+                            out.println("<br><p2><b>Question no: "+q+"</b><p2><br><b>"+questions.get(quesNo) +"</b><br><p2><b>Alloted Marks: "+questions.get(quesNo+1)+"</b><p2><br><br>");
+                            out.println("Answer: <b>"+answers.get(ansNo) +"</b><br>");
+
+                            if(Integer.parseInt(answers.get(ansNo+1))!=-1) out.println("Assigned Marks: <b>"+answers.get(ansNo+1) +"</b><br><br>");
+
+                            //out.println(answers.get(ansNo+1));
+
+            %>
+
+                            Enter Marks:<br>
+                            <input type="text" name="ans<%=answers.get(ansNo-1)%>" >
+                            <br>
+                            </div>
+
+            <%
+
+
+                        }
+
+            %>
+                        <input type="hidden" name="sid" value="<%=sid%>">
+
+                        <button type="submit" class="btn btn-default" value="marks" name="marksGiven">Submit</button>
+                    </form>
+            <%
+                }
+            %>
              
-        <br>
-        <br>
+            <br>
+            <br>
         </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

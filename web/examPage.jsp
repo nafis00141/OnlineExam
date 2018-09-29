@@ -20,123 +20,150 @@
         <title>Exam Page</title>
     </head>
     <body>
-        <h1>Exam Page</h1>
-        <%
-            HttpSession sess = request.getSession();
-            int userId = (int)sess.getAttribute("id");
-            //out.println(userId);
-            String userName = (String) sess.getAttribute("userName");
-            int ExamId = (int) sess.getAttribute("ExamId");
-            String ExamTime = (String) sess.getAttribute("ExamTime");
-            String[] parts = ExamTime.split(":");
-            int sec = Integer.parseInt(parts[0])*60*60+ Integer.parseInt(parts[1])*60+Integer.parseInt(parts[2]);
-            //out.println(userName+"<br>"+ExamId);
-            out.println("UserID: "+userName+"<br><br>");
-            String FinishExamClick = request.getParameter("Finish Exam");
-            
-            ArrayList<Integer> QuesId = new ArrayList<Integer>();
-            //out.println(FinishExamClick);
-            if("ExamFin".equals(FinishExamClick)==false){
+        
+        <header>
+            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+                <div id="navbarNavDropdown" class="navbar-collapse collapse">
+                    <ul class="navbar-nav mr-auto">
+                        <a class="navbar-brand" href="#">Aust Exams</a>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="teacher.jsp">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="logout.jsp">Log Out</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        
+        <div style="margin-top: 2%; padding: 70px;">
+        
+            <%
+                HttpSession sess = request.getSession();
+                int userId = (int)sess.getAttribute("id");
+
+                dbOperations dbo = new dbOperations();
                 
+                String userName = (String) sess.getAttribute("userName");
+                int ExamId = (int) sess.getAttribute("ExamId");
+                String ExamTime = (String) sess.getAttribute("ExamTime");
+                String[] parts = ExamTime.split(":");
+                int sec = Integer.parseInt(parts[0])*60*60+ Integer.parseInt(parts[1])*60+Integer.parseInt(parts[2]);
+
+                String FinishExamClick = request.getParameter("Finish Exam");
+
+                ArrayList<Integer> QuesId = new ArrayList<Integer>();
+
+
+                String examName = dbo.getExamName(ExamId+"");
+
+                out.println("<h3>"+examName+ "Exam Page</h3>");
                 
-                %>
-                <br>
-                <p2 id="totalTime">Exam Time: <%=ExamTime%></p2>
-                <h2><time>00:00:00</time></h2>
+                if("ExamFin".equals(FinishExamClick)==false){
+
+
+            %>
+                    <br>
+                    <h3 id="totalTime">Total Time: <%=ExamTime%></h3>
+                    <h2><time>00:00:00</time></h2>
                 
                
                 
-                <%
+            <%
                 
-                dbOperations dbo = new dbOperations();
-                ArrayList<String> questions = dbo.getAllQues(ExamId);
                 
-                %>
-                <form name="Finish Exam" action="examPage.jsp" method="POST">
+                    ArrayList<String> questions = dbo.getAllQues(ExamId);
                 
-                <%
+            %>
+                    <form name="Finish Exam" action="examPage.jsp" method="POST">
 
-                for(int quesNo=0,q=1;quesNo<questions.size();quesNo=quesNo+3,q++){
-                    out.println("<br><p2>Question no: "+q+"<p2><br>"+questions.get(quesNo) +"<br><p2>Alloted Marks: "+questions.get(quesNo+1)+"<p2><br>");
+            <%
+
+                    for(int quesNo=0,q=1;quesNo<questions.size();quesNo=quesNo+3,q++){
+                        %><div class="alert alert-primary" role="alert" style="height: auto%; width: auto%"><%
+                        out.println("<p2><b>Question no: "+q+"</b><p2><br><b>"+questions.get(quesNo) +"<br><p2><b>Alloted Marks: "+questions.get(quesNo+1)+"<b><p2><br>");
+                        %>
+                        <textarea style="height:185px;font-size:14pt;width: 70%" rows="4" cols="80" name="ans<%=Integer.parseInt(questions.get(quesNo+2))%>"></textarea><br>
+                        <br>
+                        <br>
+                        <%
+                        QuesId.add(Integer.parseInt(questions.get(quesNo+2)));
+                        //out.println("ans"+Integer.parseInt(questions.get(quesNo+2)));
+                        %></div><%
+                    }
+                    sess.setAttribute("QuesIds", QuesId);
                     %>
-                    <textarea style="height:80px;font-size:14pt" rows="4" cols="80" name="ans<%=Integer.parseInt(questions.get(quesNo+2))%>"></textarea><br>
-                    <br>
-                    <br>
-                    <%
-                    QuesId.add(Integer.parseInt(questions.get(quesNo+2)));
-                    //out.println("ans"+Integer.parseInt(questions.get(quesNo+2)));
-                   
-                }
-                sess.setAttribute("QuesIds", QuesId);
-                %>
-                
 
-                
-                   <button type="submit" id ="FinishExam" value="ExamFin" name="Finish Exam">Finish Exam</button>
-               </form>
-                
-                <script>
-                    var h1 = document.getElementsByTagName('h2')[0],
-                        stop = document.getElementById('FinishExam'),
-                        seconds = 0, minutes = 0, hours = 0,
-                        t,
-                        totalTime = "<%out.print(sec+"");%>";
-                        time = 0;
 
-                    function add() {
-                        seconds++;
-                        time++;
-                        if (seconds >= 60) {
-                            seconds = 0;
-                            minutes++;
-                            if (minutes >= 60) {
-                                minutes = 0;
-                                hours++;
+
+                       <button type="submit" class="btn btn-default" id ="FinishExam" value="ExamFin" name="Finish Exam">Finish Exam</button>
+                   </form>
+                
+                    <script>
+                        var h1 = document.getElementsByTagName('h2')[0],
+                            stop = document.getElementById('FinishExam'),
+                            seconds = 0, minutes = 0, hours = 0,
+                            t,
+                            totalTime = "<%out.print(sec+"");%>";
+                            time = 0;
+
+                        function add() {
+                            seconds++;
+                            time++;
+                            if (seconds >= 60) {
+                                seconds = 0;
+                                minutes++;
+                                if (minutes >= 60) {
+                                    minutes = 0;
+                                    hours++;
+                                }
                             }
+
+
+
+                            if(time>=totalTime) {
+                              stop.click();
+                              console.log("here" + totalTime);
+                              h1.textContent = null;
+                              return;
+                            }
+                            else{
+                                h1.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+                                timer();  
+                            }
+
                         }
-
-                        
-
-                        if(time>=totalTime) {
-                          stop.click();
-                          console.log("here" + totalTime);
-                          h1.textContent = null;
-                          return;
+                        function timer() {
+                            t = setTimeout(add, 1000);
                         }
-                        else{
-                            h1.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
-                            timer();  
-                        }
-
-                    }
-                    function timer() {
-                        t = setTimeout(add, 1000);
-                    }
-                    timer();
+                        timer();
 
 
-                   
-                    
-                </script>
+
+
+                    </script>
                 
-                <%
+            <%
                     
                 
-            }
-            else{
-                QuesId = (ArrayList<Integer>) sess.getAttribute("QuesIds");
-                dbOperations dbo = new dbOperations();
-                dbo.addExamStudent(userId, ExamId);
-                for(int i=0;i<QuesId.size();i++){
-                   String ans = (String) request.getParameter("ans"+QuesId.get(i));
-                   //out.println("QuesID = "+ QuesId.get(i) +" "+ans);
-                   boolean a = dbo.addAnswer(QuesId.get(i)+"", userId+"", ans);
                 }
-                response.sendRedirect("examFinish.jsp");
-            }
+                else{
+                    QuesId = (ArrayList<Integer>) sess.getAttribute("QuesIds");
+
+                    dbo.addExamStudent(userId, ExamId);
+                    for(int i=0;i<QuesId.size();i++){
+                       String ans = (String) request.getParameter("ans"+QuesId.get(i));
+                       //out.println("QuesID = "+ QuesId.get(i) +" "+ans);
+                       boolean a = dbo.addAnswer(QuesId.get(i)+"", userId+"", ans);
+                    }
+                    response.sendRedirect("examFinish.jsp");
+                }
          
-         %>
-         
+            %>
+        </div>
          
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

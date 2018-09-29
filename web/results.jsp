@@ -20,41 +20,61 @@
         <title>Results</title>
     </head>
     <body>
+                <header>
+            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+                <div id="navbarNavDropdown" class="navbar-collapse collapse">
+                    <ul class="navbar-nav mr-auto">
+                        <a class="navbar-brand" href="#">Aust Exams</a>
+                    </ul>
+                    <ul class="navbar-nav">
+                         <li class="nav-item active">
+                            <a class="nav-link" href="student.jsp">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="logout.jsp">Log Out</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <div style="margin-top:20%; padding: auto;">
         <%
             HttpSession sess = request.getSession();
             int userId = (int)sess.getAttribute("id");
-            //out.println(userId);
+            
             String userName = (String) sess.getAttribute("userName");
-            out.println("UserID: "+userName+"<br><br>");
+            
             
             String eid = request.getParameter("eid"); 
-            //out.println(eid);
+            
             String sid = request.getParameter("sid"); 
-            //out.println(sid);
+            
             dbOperations dbo = new dbOperations();
             
             ArrayList<String> ans = dbo.getNumber(eid,sid);
             
-            //out.println(ans);
+            String examName = dbo.getExamName(eid);
+            
+            
             
             int res = Integer.parseInt(ans.get(0));
             
             int tot = Integer.parseInt(ans.get(1));
             
             if(res<0){
-                out.println("<br><br><p2>Your result is not Published yet</p2>");
+                %><div class="alert alert-danger text-center" role="alert" style="height: auto%; width: 35%; left: 35%"><%
+                    out.println("<h2 class=\"text-capitalize\">"+userName+" your result is not Published yet</h2>");
+                %></div><%
             }
             else{
-                out.println("<br><br><p2>Your got "+res+" out of "+tot+"</p2>");
+                %><div class="alert alert-success text-center" role="alert" style="height: auto%; width: 35%; left: 35%; "><%
+                    out.println("<h2 class=\"text-capitalize\">"+userName+" you got "+res+" out of "+tot+" in "+examName+"</h2>");
+                %></div><%
             }
             
             %>
-            
-        <%
-            out.println("<br>---------------------------------------------------------------------------------------------<br>");
-           
-             %>
-         <a href="student.jsp">Home</a>
+        </div>
+        
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

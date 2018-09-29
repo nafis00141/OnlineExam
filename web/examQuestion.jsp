@@ -37,38 +37,40 @@
                 </div>
             </nav>
         </header>
+        
         <div style="margin:auto; padding: 70px;">
-        <%
-            HttpSession sess = request.getSession();
-            int userId = (int)sess.getAttribute("id");
-            //out.println(userId);
-            String userName = (String) sess.getAttribute("userName");
-            //out.println("UserID: "+userName+"<br><br><br>");
-            String examName = request.getParameter("examName");
-            //out.println("Exam Name: "+ examName+"<br>");
             
-            %><h1 class="h3 mb-3 font-weight-normal text-capitalize"><%=userName%>'s <%=examName%> Question Paper</h1><br><%
-            
-            dbOperations dbo = new dbOperations();
-            ArrayList<String> questions = dbo.getAllQues(examName);
-            
-            for(int quesNo=0,q=1;quesNo<questions.size();quesNo=quesNo+2,q++){
-                %><div class="alert alert-primary" role="alert" style="height: auto%; width: auto%"><%
-                out.println("<p2><b>Question no: "+q+"</b></p2><br><b>"+questions.get(quesNo) +"</b><br><p2>Alloted Marks: <b>"+questions.get(quesNo+1)+"</b><p2><br>");
-                %></div><%
-            }
+            <%
+                HttpSession sess = request.getSession();
+                int userId = (int)sess.getAttribute("id");
+                //out.println(userId);
+                String userName = (String) sess.getAttribute("userName");
+                //out.println("UserID: "+userName+"<br><br><br>");
+                String examName = request.getParameter("examName");
+                //out.println("Exam Name: "+ examName+"<br>");
 
-            
-            
-         %>
+                %><h1 class="h3 mb-3 font-weight-normal text-capitalize"><%=userName%>'s <%=examName%> Question Paper</h1><br><%
+
+                dbOperations dbo = new dbOperations();
+                ArrayList<String> questions = dbo.getAllQues(examName);
+
+                for(int quesNo=0,q=1;quesNo<questions.size();quesNo=quesNo+2,q++){
+                    %><div class="alert alert-primary" role="alert" style="height: auto%; width: auto%"><%
+                    out.println("<p2><b>Question no: "+q+"</b></p2><br><b>"+questions.get(quesNo) +"</b><br><p2>Alloted Marks: <b>"+questions.get(quesNo+1)+"</b><p2><br>");
+                    %></div><%
+                }
+
+
+
+            %>
          
             <div class="alert alert-warning" role="alert" style="height: auto%; width: 10%">
                 <a href="examQuestionEdit.jsp?examName=<%=examName%>"> Edit <%=examName%><br></a>
             </div>
          
-         <br>
-         <br>
-         </div>
+        <br>
+        <br>
+        </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
